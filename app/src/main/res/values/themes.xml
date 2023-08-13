@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.AtizanHealthLabOnBoarding" parent="android:Theme.Material.Light.NoActionBar" />
+<!--    Createv custom app theme here-->
+
+    <style name="Base.Theme.SplashScreen." parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/dark_green_700</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logowhite</item>
+        <item name="postSplashScreenTheme">@style/Theme.AtizanHealthLabOnBoarding</item>
+    </style>
+</resources>

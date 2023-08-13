@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">AtizanHealthLabOnBoarding</string>
+    <string name="slide1_title">Bienvenue sur atizan</string>
+    <string name="slide1_paragraphe">Réduisez  le stress dans votre vie
+        grâce à des outils pratiques
+        axés sur l action et la pleine conscience pour développer rapidement
+        votre equilibre emotionnel. </string>
+    <string name="slide2_title">Votre compagnon de bien-etre mental</string>
+    <string name="slide2_paragraph">Apprenez À surmonter les croyances
+        limitantes qui empechent d’avancer</string>
+
+    <string name="slide3_title">Une approache scientifique</string>
+    <string name="slide3_paragraph">Basée sur des approches thérapeutiques éprouvées,
+       développer par des psychologues haïtiens </string>
+    <string name="creer_un_complte">Creer un compte</string>
+
+
+
+
+</resources>
