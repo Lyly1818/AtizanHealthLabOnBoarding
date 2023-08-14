@@ -8,7 +8,7 @@ data class OnBoardingData(
         fun getData(): List<OnBoardingData>{
             return listOf(
                 OnBoardingData(R.drawable.slidesmartphone, R.string.slide1_title, R.string.slide1_paragraphe),
-                OnBoardingData(R.drawable.slidesmartphone, R.string.slide2_title, R.string.slide2_title),
+                OnBoardingData(R.drawable.slidemeditation, R.string.slide2_title, R.string.slide2_paragraph),
                 OnBoardingData(R.drawable.slidekournaling, R.string.slide3_title, R.string.slide3_paragraph))
 
 //            )
