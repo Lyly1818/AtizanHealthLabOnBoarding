@@ -6,7 +6,7 @@
 
     <style name="Base.Theme.SplashScreen." parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/dark_green_700</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/logowhite</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/iconlogowhite250</item>
         <item name="postSplashScreenTheme">@style/Theme.AtizanHealthLabOnBoarding</item>
     </style>
 </resources>

@@ -26,6 +26,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowLeft
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -55,6 +56,8 @@ fun OnBoarding() {
 
     Column(modifier = Modifier.fillMaxSize()) {
         TopSection(
+//    TODO   Need to change my approach use back button a reusable component
+//            TODO need to make skip disappearch on the last slide
             onBackClick = {
                 if (pageState.currentPage + 1 > 1) scope.launch {
                     pageState.scrollToPage(pageState.currentPage - 1)
@@ -65,6 +68,9 @@ fun OnBoarding() {
                     pageState.scrollToPage(items.size - 1)
                 }
             }
+//            if(pageState.currentPage == 2){
+//
+//            }
         )
 //Contain the sliders
         HorizontalPager(
@@ -76,83 +82,45 @@ fun OnBoarding() {
         ) { page ->
             OnBoardingItem(items = items[page])
         }
-//        BottomSection(size = items.size, index = pageState.currentPage) {
-//            if (pageState.currentPage + 1 < items.size) scope.launch {
-//                pageState.scrollToPage(pageState.currentPage + 1)
-//            }
-//        }
 
 
-        NewBottomSection(pageState.currentPage)
+
+        NewBottomSection(pageState.currentPage,
+            onBackClick = {
+                if (pageState.currentPage + 1 > 1) scope.launch {
+                    pageState.scrollToPage(pageState.currentPage - 1)
+                }
+            },
+            onNextClick = {
+
+            }
+            )
     }
 }
 
 
 @Composable
 fun TopSection(onBackClick: () -> Unit = {}, onSkipClick: () -> Unit = {}) {
-    Box(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
+            .padding(12.dp),
+        horizontalArrangement =  Arrangement.SpaceBetween
     ) {
         // Back button
-        IconButton(onClick = onBackClick, modifier = Modifier.align(Alignment.CenterStart)) {
+        IconButton(onClick = onBackClick, modifier = Modifier
+            .align(Alignment.CenterVertically)) {
             Icon(imageVector = Icons.Outlined.KeyboardArrowLeft, contentDescription = "arrow back")
         }
 
-//        // Skip Button
-//        TextButton(
-//            onClick = onSkipClick,
-//            modifier = Modifier.align(Alignment.CenterEnd),
-//            contentPadding = PaddingValues(0.dp)
-//        ) {
-//            Text(text = "Skip", color = MaterialTheme.colorScheme.onBackground)
-//        }
+        CustomTextButton(text = "Skip",
+            modifier = Modifier.background(MaterialTheme.colorScheme.onBackground),
+            onButtonClick = { /*TODO*/ } )
+
+
     }
 }
 
-//@Composable
-//fun BottomSection(size: Int, index: Int, onButtonClick: () -> Unit = {}) {
-//    Box(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(12.dp)
-//    ) {
-//        // Indicators
-//        Indicators(size, index)
-//
-//
-//        if (index == 2){
-//
-//        OutlinedButton(onClick = { /*TODO*/ }) {
-//
-//            Text(
-//                text = "Commencons",
-//                modifier = Modifier
-//                    .padding(vertical = 8.dp, horizontal = 40.dp),
-//                color = Color.Magenta
-//            )
-//
-//        }
-//        }else{
-//
-//            FloatingActionButton(
-////            TODO Implement a callBack to move to next slide
-//                onClick = { /* do something */ },
-//                containerColor = androidx.compose.ui.graphics.Color.Black,
-//                modifier = Modifier
-//                    .align(Alignment.CenterEnd)
-//                    .clip(RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp))
-//            ) {
-//                Icon(Icons.Outlined.KeyboardArrowRight,
-//                    tint = androidx.compose.ui.graphics.Color.White,
-//                    contentDescription = "Localized description")
-//            }
-//        }
-//
-//
-//    }
-//}
 
 @Composable
 fun BoxScope.Indicators(size: Int, index: Int) {
@@ -173,7 +141,6 @@ fun Indicator(isSelected: Boolean) {
         targetValue = if (isSelected) 25.dp else 10.dp,
         animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy), label = ""
     )
-
     Box(
         modifier = Modifier
             .height(10.dp)
@@ -183,7 +150,6 @@ fun Indicator(isSelected: Boolean) {
                 color = (if (isSelected) MaterialTheme.colorScheme.primary else androidx.compose.ui.graphics.Color.White) as androidx.compose.ui.graphics.Color
             )
     ) {
-
     }
 }
 
@@ -199,7 +165,6 @@ fun OnBoardingItem(items: OnBoardingData) {
             contentDescription = "Image1",
             modifier = Modifier.padding(start = 20.dp, end = 20.dp)
         )
-
         Spacer(modifier = Modifier.height(25.dp))
 
         Text(
@@ -241,19 +206,11 @@ fun CustomTextButton(text: String, modifier: Modifier, onButtonClick: () -> Unit
             color = MaterialTheme.colorScheme.primary,
             style = Typography.bodyMedium,
             fontWeight = FontWeight.Medium)
-        
     }
 }
 
-//@Preview
-//@Composable
-//fun SkipButtonPrev(){
-//    SkipOrtNext(text = "Next", modifier = Modifier.background(Color.White), {}, R.drawable.logoverticaldark)
-//}
-
-
 @Composable
-fun NewBottomSection(currentPager: Int){
+fun NewBottomSection(currentPager: Int, onBackClick: () -> Unit, onNextClick: () -> Unit){
 
     Row(
         modifier = Modifier
@@ -264,7 +221,7 @@ fun NewBottomSection(currentPager: Int){
     ){
 
         if (currentPager == 2){
-            OutlinedButton(
+            Button(
 //                    TODO create call back to nagivate to
                 onClick = { },
                 shape = RoundedCornerShape(50), // = 40% percent
@@ -272,16 +229,16 @@ fun NewBottomSection(currentPager: Int){
                 Text(
                     text = "Get Started",
                     modifier = Modifier.padding(vertical = 8.dp, horizontal = 40.dp),
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }else{
-//            SkipNextButton("Skip",Modifier.padding(start = 20.dp))
-//            SkipNextButton("Next",Modifier.padding(end = 20.dp))
-
-            CustomTextButton(text = "Skip",
-                modifier = Modifier.background(MaterialTheme.colorScheme.onBackground),
-                onButtonClick = { /*TODO*/ } )
+            IconButton(
+                onClick = onBackClick,
+                modifier = Modifier
+                .align(Alignment.CenterVertically)) {
+                Icon(imageVector = Icons.Outlined.KeyboardArrowLeft, contentDescription = "arrow back")
+            }
 
 
             CustomTextButton(text = "Next",
