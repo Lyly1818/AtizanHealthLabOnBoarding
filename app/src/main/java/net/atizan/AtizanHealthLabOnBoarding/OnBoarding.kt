@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+//import androidx.compose.foundation.layout.ColumnScopeInstance.align
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -38,6 +40,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -54,7 +57,8 @@ fun OnBoarding() {
     val scope = rememberCoroutineScope()
     val pageState = rememberPagerState()
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier.fillMaxWidth()) {
         TopSection(
 //    TODO   Need to change my approach use back button a reusable component
 //            TODO need to make skip disappearch on the last slide
@@ -68,9 +72,6 @@ fun OnBoarding() {
                     pageState.scrollToPage(items.size - 1)
                 }
             }
-//            if(pageState.currentPage == 2){
-//
-//            }
         )
 //Contain the sliders
         HorizontalPager(
@@ -82,8 +83,31 @@ fun OnBoarding() {
         ) { page ->
             OnBoardingItem(items = items[page])
         }
-
-
+        
+//        TODO Implement Indicator
+         Row (
+             Modifier
+                 .height(20.dp)
+                 .fillMaxWidth()
+                 .align(Alignment.CenterHorizontally),
+             horizontalArrangement = Arrangement.Center
+         ){
+             repeat(3){ iteration ->
+                 val color = if(pageState.currentPage == iteration){
+                      Color.DarkGray
+                 }else{
+                     Color.LightGray
+                 }
+                 Box(
+                     modifier = Modifier
+                         .padding(1.dp)
+                         .clip(CircleShape)
+                         .background(color)
+                         .size(10.dp)
+                        )
+             }
+             
+         }
 
         NewBottomSection(pageState.currentPage,
             onBackClick = {
@@ -93,8 +117,9 @@ fun OnBoarding() {
             },
             onNextClick = {
 
-            }
-            )
+            })
+
+        Spacer(modifier = Modifier.height(15.dp))
     }
 }
 
@@ -158,14 +183,14 @@ fun OnBoardingItem(items: OnBoardingData) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize()
+//        modifier = Modifier.fillMaxSize()
     ) {
         Image(
             painter = painterResource(id = items.image),
             contentDescription = "Image1",
-            modifier = Modifier.padding(start = 20.dp, end = 20.dp)
+            modifier = Modifier.padding(start = 10.dp, end = 10.dp)
         )
-        Spacer(modifier = Modifier.height(25.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
         Text(
             text = stringResource(id = items.title),
@@ -184,7 +209,7 @@ fun OnBoardingItem(items: OnBoardingData) {
             color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Light,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier.padding(5.dp),
             letterSpacing = 1.sp,
         )
     }
@@ -214,7 +239,7 @@ fun NewBottomSection(currentPager: Int, onBackClick: () -> Unit, onNextClick: ()
 
     Row(
         modifier = Modifier
-            .padding(bottom = 20.dp)
+//            .padding(bottom = 20.dp)
             .fillMaxWidth()
         ,
         horizontalArrangement = if(currentPager != 2) Arrangement.SpaceBetween else Arrangement.Center
